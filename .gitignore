@@ -1,3 +1,4 @@
 libsum.so
 main
 zig-cache/
+main.o
