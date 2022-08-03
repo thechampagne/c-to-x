@@ -9,8 +9,9 @@ V ?= v
 JAVA ?= java
 JAVAC ?= javac
 CSC ?= csc
+PHP ?= php
 
-.PHONY: zig go d rust python nim v java csharp clear
+.PHONY: zig go d rust python nim v java csharp php clear
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -52,6 +53,9 @@ java: libsumjava.so
 csharp: libsum.so
 	$(CSC) csharp/Program.cs -out:main
 	./main
+
+php: libsum.so
+	$(PHP) php/index.php
 
 clear:
 ifneq (,$(wildcard ./libsum.so))
