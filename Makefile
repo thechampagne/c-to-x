@@ -5,8 +5,9 @@ DD ?= dmd
 RUST ?= rustc
 PY ?= python3
 NIM ?= nim
+V ?= v
 
-.PHONY: zig go d rust python nim clear
+.PHONY: zig go d rust python nim v clear
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -32,6 +33,10 @@ python: libsum.so
 
 nim: libsum.so
 	$(NIM) c -o:main --passL:./libsum.so nim/main.nim
+	./main
+
+v: libsum.so
+	$(V) v/main.v -o main
 	./main
 
 clear:
