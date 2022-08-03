@@ -8,8 +8,9 @@ NIM ?= nim
 V ?= v
 JAVA ?= java
 JAVAC ?= javac
+CSC ?= csc
 
-.PHONY: zig go d rust python nim v java clear
+.PHONY: zig go d rust python nim v java csharp clear
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -47,6 +48,10 @@ libsumjava.so:
 java: libsumjava.so
 	$(JAVAC) c_java/Main.java
 	$(JAVA) c_java/Main
+
+csharp: libsum.so
+	$(CSC) csharp/Program.cs -out:main
+	./main
 
 clear:
 ifneq (,$(wildcard ./libsum.so))
