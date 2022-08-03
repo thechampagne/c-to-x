@@ -3,6 +3,7 @@ ZIG ?= zig
 GO ?= go
 DD ?= dmd
 RUST ?= rustc
+PY ?= python3
 
 .PHONY: zig go d rust clear
 
@@ -24,6 +25,9 @@ d: libsum.so
 rust: libsum.so
 	$(RUST) -C link-args="-L. -l:./libsum.so" rust/main.rs
 	./main
+
+python: libsum.so
+	$(PY) python/main.py
 
 clear:
 	rm libsum.so main
