@@ -6,8 +6,10 @@ RUST ?= rustc
 PY ?= python3
 NIM ?= nim
 V ?= v
+JAVA ?= java
+JAVAC ?= javac
 
-.PHONY: zig go d rust python nim v clear
+.PHONY: zig go d rust python nim v java clear
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -39,5 +41,20 @@ v: libsum.so
 	$(V) v/main.v -o main
 	./main
 
+libsumjava.so:
+	$(CC) -shared c_java/main.c -I$(JAVA_HOME)/include -o libsumjava.so
+
+java: libsumjava.so
+	$(JAVAC) c_java/Main.java
+	$(JAVA) c_java/Main
+
 clear:
-	rm libsum.so main
+ifneq (,$(wildcard ./libsum.so))
+	rm libsum.so
+endif
+ifneq (,$(wildcard ./libsumjava.so))
+	rm libsumjava.so
+endif
+ifneq (,$(wildcard ./main))
+	rm main
+endif
