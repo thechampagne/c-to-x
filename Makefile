@@ -11,8 +11,9 @@ JAVAC ?= javac
 CSC ?= csc
 PHP ?= php
 DART ?= dart
+ODIN ?= odin
 
-.PHONY: zig go d rust python nim v java csharp php dart clear
+.PHONY: zig go d rust python nim v java csharp php dart odin clean
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -61,7 +62,11 @@ php: libsum.so
 dart: libsum.so
 	$(DART) dart/main.dart
 
-clear:
+odin: libsum.so
+	$(ODIN) build odin/main.odin -file -out:main
+	./main
+
+clean:
 ifneq (,$(wildcard ./libsum.so))
 	rm libsum.so
 endif
