@@ -13,8 +13,9 @@ PHP ?= php
 DART ?= dart
 ODIN ?= odin
 CRYSTAL ?= crystal
+CXX ?= g++
 
-.PHONY: zig go d rust python nim v java csharp php dart odin crystal clean
+.PHONY: zig go d rust python nim v java csharp php dart odin crystal cpp clean
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -69,6 +70,10 @@ odin: libsum.so
 
 crystal: libsum.so
 	$(CRYSTAL) build crystal/main.cr
+	./main
+
+cpp: libsum.so
+	$(CXX) c++/main.cpp -o main -L. -l:./libsum.so
 	./main
 
 clean:
