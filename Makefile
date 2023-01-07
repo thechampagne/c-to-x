@@ -14,8 +14,9 @@ DART ?= dart
 ODIN ?= odin
 CRYSTAL ?= crystal
 CXX ?= g++
+FPC ?= fpc
 
-.PHONY: zig go d rust python nim v java csharp php dart odin crystal cpp clean
+.PHONY: zig go d rust python nim v java csharp php dart odin crystal cpp pascal clean
 
 libsum.so:
 	$(CC) -shared c/main.c -o libsum.so
@@ -74,6 +75,10 @@ crystal: libsum.so
 
 cpp: libsum.so
 	$(CXX) c++/main.cpp -o main -L. -l:./libsum.so
+	./main
+
+pascal: libsum.so
+	$(FPC) pascal/main.pas
 	./main
 
 clean:
